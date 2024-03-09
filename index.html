@@ -8,12 +8,75 @@
 <body>
 <script>
 
+let playerSelection = prompt("Rock, Paper, or Scissors");
+// let playerSelection = getComputerChoice();
+let computerSelection = getComputerChoice();
+const printPlayer = capitalizedPlayer(playerSelection);
 
+function capitalizedPlayer(playerSelection){
+    const firstChar = playerSelection.slice(0, 1);
+    const endString = playerSelection.slice(1, playerSelection.length);
+    return firstChar.toUpperCase() + endString.toLowerCase();
+}
 
+function getComputerChoice(){
+    let random = Math.floor(Math.random()*3 + 1);
+    if (random === 1){
+        return 'Rock';
+    }
+    else if (random === 2){
+        return 'Paper';
+    }
+    else{
+        return 'Scissors';
+    }
+}
 
+function playRound(playerSelection, computerSelection){
+    if (playerSelection.toLowerCase() === computerSelection.toLowerCase()){
+        return "It's a tie!";
+    }
+    else if (playerSelection.toLowerCase() === 'rock'){
+        if (computerSelection.toLowerCase() === 'scissors'){
+            return "You win! Rock beats Scissors."
+        }
+        else{
+            return "You lose! Rock loses to Paper."
+        }
+    }
+    else if (playerSelection.toLowerCase() === 'scissors' && computerSelection.toLowerCase() === 'rock'){
+            return "You lose! Scissors loses to Rock."
+    }
+    else {
+        if (playerSelection.length > computerSelection.length){
+            return "You win! " + printPlayer + " beats " + computerSelection + "."
+        }
+        else{
+            return "You lose! " + printPlayer + " loses to " + computerSelection + "."
+        }
+    }
 
+}
 
+let wins = 0;
+let ties = 0;
+let losses = 0;
 
+for (let games = 0; games < 5; games++){
+    const computerChoice = getComputerChoice();
+    if (playRound(playerSelection, computerChoice).slice(0,5) === 'You w'){
+        wins = (wins + 1);
+    }
+    else if (playRound(playerSelection, computerChoice).slice(0,5) === 'You l'){
+        losses = (losses + 1);
+    }
+    else {
+        ties = (ties + 1);
+    }
+    console.log('Player chose '+playerSelection + ', Computer chose ' + computerChoice)
+    console.log(playRound(playerSelection, computerChoice))
+    console.log(wins+' wins, ',ties+' ties, '+ losses +' losses')
+}
 </script>
 </body>
 </html>
